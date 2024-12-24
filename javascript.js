@@ -19,7 +19,7 @@ squareButton.addEventListener("click", function () {
     const user_squares = Number(window.prompt("How many squares per side? (Max: 100)", ""));
 
     // Check if input is a positive number with max 100 squares per side
-    if (!((user_squares>0)&&(user_squares<100))){
+    if (!((user_squares>0)&&(user_squares<=100))){
         alert("Please enter a positive number (max: 100).");
         return;
     }
