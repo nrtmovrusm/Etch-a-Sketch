@@ -1,4 +1,5 @@
 const gridContainer = document.querySelector("#grid-container");
+let currentSquares = 16;
 
 // Create initial sketchpad and events for sketching
 for (let i = 0; i < 16 * 16; i++) {
@@ -12,28 +13,13 @@ for (let i = 0; i < 16 * 16; i++) {
             square.style.backgroundColor = "#3498db"; // Blue color mode
         }
     });
-
     gridContainer.appendChild(square);
 }
-
-// Add functionality to Square Change button
-const squareButton = document.querySelector("#user-squares");
-
-squareButton.addEventListener("click", function () {
-    const user_squares = Number(window.prompt("How many squares per side? (Max: 100)", ""));
-
-    // Check if input is a positive number with max 100 squares per side
-    if (!((user_squares>0)&&(user_squares<=100))){
-        alert("Please enter a positive number (max: 100).");
-        return;
-    }
-
-    createGrid(user_squares);
-});
 
 // Function to clear pre-existing sketchpad 
 // and re-create sketchpad based on user input for # of squares per side 
 function createGrid(user_squares) {
+    currentSquares = user_squares;
     while (gridContainer.firstChild) {
         gridContainer.removeChild(gridContainer.firstChild);
     }
@@ -58,6 +44,20 @@ function createGrid(user_squares) {
         gridContainer.appendChild(square);
     }
 }
+
+// Add functionality to change square sizes button
+const squareButton = document.querySelector("#user-squares");
+
+squareButton.addEventListener("click", function () {
+    const user_squares = Number(window.prompt("How many squares per side? (Max: 100)", ""));
+
+    // Check if input is a positive number with max 100 squares per side
+    if (!((user_squares>0)&&(user_squares<=100))){
+        alert("Please enter a positive number (max: 100).");
+        return;
+    }
+    createGrid(user_squares);
+});
 
 // Random Color (RGB) Generator
 function getRandomColor() {
@@ -84,4 +84,19 @@ colorButton.addEventListener("click", function () {
     }
 
     console.log(isRandomColorMode ? "Random color mode activated" : "Blue color mode activated");
+});
+
+// Function to reset the background color of all squares
+function clearGrid() {
+    const squares = gridContainer.querySelectorAll(".grid-square");
+    squares.forEach(square => {
+        square.style.backgroundColor = "white";  // Reset background color to white
+    });
+}
+
+// Add functionality to Clear button
+const clearButton = document.querySelector("#clear-btn");
+
+clearButton.addEventListener("click", function () {
+    clearGrid();
 });
